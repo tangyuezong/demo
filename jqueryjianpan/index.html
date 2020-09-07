@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>jQuery模拟手机虚拟键盘</title>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<link rel="stylesheet" href="css/dome.css">
+<link rel="stylesheet" href="css/keyboard.css">
+<style>
+	.m{
+	margin-top: 100px;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+	}
+	.m input{
+    border: 1px solid #9A9A9A;line-height: 30px;width: 300px;padding-left: 10px
+}
+</style>
+</head>
+<body>
+<div class="m"> 
+	帐号：
+  <input type="text" class="account" value=""/>
+</div>
+<script src="js/slide.js"></script> 
+<script>
+    $(document).ready(function() {
+
+        $("input").focus(function(){
+            document.activeElement.blur();  // 阻止弹出系统软键盘
+            var _cliss = $(this).attr("class");
+            console.log(_cliss);
+            $('body').keyboard({
+                defaults:'English',    //键盘显示类型   English 字母  number 数字  symbol 符号
+                inputClass:_cliss,        //输入框Class
+                caseSwitch:'toLowerCase', //英文大小写  toLowerCase 小写  toUpperCase 大写
+            });
+        });
+
+    });
+
+</script>
+</body>
+</html>
