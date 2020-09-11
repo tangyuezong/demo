@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>添加管理员</title>
+    <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" media="all">
+</head>
+
+
+<body style="padding:10px 10px;">
+<!--刷下页面代码-->
+<a class="layui-btn layui-btn-sm" style="float:right;height: 24px;line-height: 24px;padding: 0 5px;font-size: 12px;" href="javascript:location.replace(location.href);" title="刷新">
+    <i class="layui-icon" style="margin-right: 1px;">&#xe669;</i>
+</a>
+<!--刷下页面代码-->
+<!-- <a href="{:url('Index/index')}">首页</a>  >  <a href="{:url('index')}">分类管理</a>  -->
+<span class="layui-breadcrumb">
+  <a href="/">首页</a><a href="{:url('index')}">管理员列表</a><a><cite>添加角色</cite></a>
+</span>
+<hr>
+
+<div class="layui-container" style="margin-left:0px;">
+    <form class="layui-form layui-form-pane" action="" id="myform" onsubmit="return checkform();">
+        <fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;padding: 30px 30px;">
+            <legend>添加管理员</legend>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">管理员名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="admin_name" required placeholder="请输入管理员名称" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">管理员密码</label>
+                <div class="layui-input-block">
+                    <input type="text" name="admin_password" required placeholder="请输入管理员密码" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">管理员状态</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="status" value="1" title="启用" checked="">
+                    <input type="radio" name="status" value="0" title="禁用">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo"><i class="layui-icon">&#xe672;</i>确认提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe63d;</i>重置</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<div style="height: 150px;"></div>
+<script src="__ADMIN__/layui/jquery.js"></script>
+<script src="__ADMIN__/layui/layui.js"></script>
+<script>
+    layui.use(['element', 'form'], function(){
+        var element = layui.element;
+        var form = layui.form;
+    });
+</script>
+
+<!--Ajax异步修改-->
+<script>
+    //表单前端验证
+    function checkform() {
+        var formdata=$('#myform').serialize();
+        //Ajax异步提交
+        $.ajax({
+            type:"POST",
+            url:"{:url('add')}",
+            dataType:"json",
+            data:formdata,
+            success:function (data) {
+                //alert(666)
+                if(data.code==1){
+                    // layer.msg('成功')
+                    layer.msg(data.msg,{time:2000},function () {
+                        //alert(666)
+                        var index =parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        parent.location.reload();
+                    });
+                }else {
+                    //alert('失败');
+                    layer.msg(data.msg)
+                }
+            }
+        })
+        //阻止表单提交
+        return false;
+    }
+</script>
+
+
+</body>
+</html>

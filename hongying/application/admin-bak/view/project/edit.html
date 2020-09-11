@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>编辑项目</title>
+    <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" media="all">
+
+</head>
+<body style="padding:10px 10px;">
+<!--刷下页面代码-->
+<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">&#xe669;</i></a>
+<!--刷下页面代码-->
+<a href="{:url('admin/Index/index')}">首页</a>  >  <a href="{:url('index')}">项目管理</a>
+<hr>
+
+<div class="layui-container" style="margin-left:0px;">
+    <form class="layui-form layui-form-pane" action="" method="post" enctype="multipart/form-data">
+        <fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;padding: 30px 30px;">
+            <legend>编辑项目</legend>
+
+            <input type="hidden" name="id" value="{$projects.id}">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">项目名称</label>
+                <div class="layui-input-inline" style="width: 70%">
+                    <input type="text" name="name" value="{$projects.name}" placeholder="请输入项目名称" required lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">项目标志</label>
+                <div class="layui-input-inline" style="width: 70%">
+                    <input type="file" name="thumb"  autocomplete="off">
+                    {if condition="$projects['thumb'] neq ''"}
+                    <img src="__uploads__/{$projects.thumb}" height="50">
+                    {else /}
+                    暂无缩略图
+                    {/if}
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">项目地址</label>
+                <div class="layui-input-inline" style="width: 70%">
+                    <input type="text" name="link_url" value="{$projects.link_url}" placeholder="请输入项目地址" required lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">日利率</label>
+                <div class="layui-input-inline" style="width: 70%">
+                    <input type="text" name="dayrate" value="{$projects.dayrate}" placeholder="请输入日利率" required lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">额度</label>
+                <div class="layui-input-inline" style="width: 70%">
+                    <input type="text" name="limit" value="{$projects.limit}" placeholder="请输入额度" required lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否推荐</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="recommend" value="1" title="推荐" {if condition="$projects['recommend'] eq 1"}checked{/if}>
+                    <input type="radio" name="recommend" value="0" title="不推荐" {if condition="$projects['recommend'] eq 0"}checked{/if}>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否显示</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="status" value="1" title="显示" {if condition="$projects['status'] eq 1"}checked{/if}>
+                    <input type="radio" name="status" value="0" title="不显示" {if condition="$projects['status'] eq 0"}checked{/if}>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">确认提交</button>
+                </div>
+            </div>
+        </fieldset>
+
+
+    </form>
+
+</div>
+<script src="__ADMIN__/layui/jquery.js"></script>
+<script src="__ADMIN__/layui/layui.js"></script>
+
+<script>
+    layui.use(['element', 'form'], function(){
+        var element = layui.element;
+        var form = layui.form;
+    });
+</script>
+</body>
+</html>

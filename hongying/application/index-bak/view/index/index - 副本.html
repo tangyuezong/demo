@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html class="bg-color">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>闪银宝_会员注册</title>
+<link rel="stylesheet" href="__INDEX__/css/my-h5.css">
+<link rel="icon" type="image/png" href="https://syb.seercf.com/favicon.ico?t=12.1.ico">
+<script type="text/javascript" src="__INDEX__/js/jquery-1.8.2.min.js"></script>
+<link href="__INDEX__/css/themes.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__INDEX__/js/common.js"></script>
+
+	<!--声明异步手机号发送短信-->
+	<script>
+        var email_url="{:url('index/Alisms/sendSms')}";//邮箱请求URL重写
+	</script>
+
+	<style>
+		.pop {  display: block; width: 40%; min-height:550px;  max-height: 750px;  height:550px;  position: absolute;  top: 0;  left: 0;  bottom: 0;  right: 0;  margin: auto;  padding: 20px;  z-index: 130;  border-radius: 8px;  background-color: #fff;  box-shadow: 0 3px 18px rgba(100, 0, 0, .5);}
+		.pop-top{  height:50px;  width:100%;  border-bottom: 1px #E5E5E5 solid; position: relative;}
+		.pop-top h2{display:black; text-align: center; font-size: 20px; font-weight: 600;color: #2d2d2d;}
+		.pop-top span{cursor: pointer;  font-weight: bold; display:black; position: absolute; right:10px; top:10px;}
+		.pop-foot{  height:50px;  line-height:50px;  width:100%;  border-top: 1px #E5E5E5 solid;  text-align: right;  }
+		.pop-cancel, .pop-ok {  padding:8px 15px;  margin:15px 5px;  border: none;  border-radius: 5px;  background-color: #337AB7;  color: #fff;  cursor:pointer;  }
+		.pop-cancel {  background-color: #FFF;  border:1px #CECECE solid;  color: #000;  }
+		.pop-content{  height: 380px;  }
+		.pop-content-left{  float: left;  }
+		.pop-content-right{font-size: 16px;  line-height:35px; overflow-y: scroll; height:446px; margin-top: 15px; color: #2d2d2d;}
+		.pop-content-right strong{ font-weight: 900;}
+		.bgPop{  display: none;  position: absolute;  z-index: 129;  left: 0;  top: 0;  width: 100%;  height: 100%;  background: rgba(0,0,0,.5);  }
+	</style>
+</head>
+<body>
+
+<!---->
+<div class="reg-h5">
+	<div class="w580">
+		<div class="c1-title">
+			<img  src="__INDEX__/picture/1.png" />
+		</div>
+
+		<!--<form action="" method="post">-->
+
+			<!--<div class="c3">-->
+				<!--<div class="formbox">-->
+					<!--<input id="brokerId" name="name" type="text" placeholder="请输入您的真实姓名" class="inp"/>-->
+					<!--<input id="mobile" name="mobile" type="text" autocomplete="off" class="inp" placeholder="请输入您的手机号" />-->
+					<!--<input id="password" name="password" type="password" autocomplete="off" class="inp" placeholder="请设置6-20位登录密码" />-->
+					<!--&lt;!&ndash;<div class="item w-95">&ndash;&gt;-->
+					<!--&lt;!&ndash;<input id="checkCode" type="text" name="code" autocomplete="off" class="inp" placeholder="请输入图形验证码" />&ndash;&gt;-->
+					<!--&lt;!&ndash;<img id="checkCodeImg" class="yzm" src="{:captcha_src()}" onclick="this.src='{:captcha_src()}?'+Math.random();" style="cursor:pointer" />&ndash;&gt;-->
+					<!--&lt;!&ndash;</div>&ndash;&gt;-->
+					<!--<div class="item">-->
+						<!--<input id="authCode" type="number" name="send_code" autocomplete="off" class="inp inp-150" placeholder="请输入短信验证码" />-->
+						<!--<input type="button" class="btn btn-50" onclick="sendChangeEmail();"  id="btn2" value="获取验证码">-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+			<!--<div class="c4">-->
+				<!--<button id="submit-btn" type="submit" class="btn btn-reset">立即注册</button>-->
+				<!--<p>-->
+					<!--&lt;!&ndash;<input type="checkbox" class="checkbox" checked />&ndash;&gt;-->
+					<!--&lt;!&ndash;阅读并同意&ndash;&gt;-->
+					<!--&lt;!&ndash;<a href="https://sybapi.seercf.com/app/html/reg_rule.htm">《用户注册协议》</a>&ndash;&gt;-->
+					<!--<input type="checkbox" class="checkbox"  id="regText" checked="checked" onclick="if(this.checked){Ds('sbm');}else{Dh('sbm');}"/>-->
+					<!--<label class="c" hidefocus="true" style="font-size: 12.5px;">我已阅读并接受《<a href="javascript:void(0)"  class="click_pop">用户注册协议</a>》</label>-->
+				<!--</p>-->
+			<!--</div>-->
+
+		<!--</form>-->
+
+	</div>
+	<div class="layer-bg"></div>
+	<div class="dialog-box">
+		<div class="bd">
+			<h3>恭喜你注册成功！</h3>
+			<a href="https://fir.im/syb" class="btn btn-30 icon-android">
+				<i></i><span>安卓用户下载APP</span>
+			</a>
+			<a href="https://sybtg.seercf.com/app/ios.htm" class="btn btn-30 icon-ios">
+				<i></i><span>苹果用户下载APP</span>
+			</a>
+		</div>
+	</div>
+	<div class="dialog-alert">
+		<p id="err-dialog">验证码错误</p>
+	</div>
+</div>
+
+
+	<script type="text/javascript" src="__INDEX__/jquery-1.8.3.min.js"></script>
+	<script src="__INDEX__/jquery.cookie.js" type="text/javascript"></script>
+	<!--<script src="__MEMBER__/layui/layui.js" type="text/javascript"></script>-->
+	<!--发送邮件验证码使用cookie-->
+	<script type="text/javascript">
+        $(function () {
+            //判断cookie是否存在
+            if ($.cookie('total1')!=undefined && $.cookie('total1')!='NaN' && $.cookie('total1')!='null'){
+                timekeeping1();
+            }else {
+                $("#btn2").attr('disabled',false);
+
+            }
+        });
+        //ajax异步获取邮箱验证码
+        function sendChangeEmail(){
+            var obj = $("input[name='mobile']");
+            mobile = obj.val();
+            //alert(mobile);
+            if (mobile == ''){
+                alert('请输入手机号');
+//            layer.msg('请输入手机号');
+                return false;
+            }
+            $('#btn2').val('获取中...');
+            $("#btn2").css("background-color","#dddddd");
+
+            $.ajax({
+                type:'post',
+                dataType:'json',
+                url:email_url,
+                data:{mobile:mobile},
+                success:function (data) {
+                    $("#btn2").val(data.msg);
+                    if (data.status == 0){
+
+                        //发送成功之后写入cookie
+                        $.cookie('total1',60);
+                        timekeeping1();
+
+                    }
+                }
+            })
+        }
+        //隔一秒cookie-1
+        function timekeeping1() {
+            $("#btn2").attr('disabled',true);//按钮设为禁用
+
+
+            var interval=setInterval(function () {
+                //获取cookie值
+                total1=$.cookie('total1');
+                $('#btn2').val('请等待'+total1+'秒');
+                total1--;
+                if (total1==0){
+                    clearInterval(interval);
+                    //清除cookie,设置过期
+                    $.cookie('total1',total1,{expires:-1});
+                    $('#btn2').val('重新发送');
+                    $("#btn2").attr('disabled',false);
+                }else {
+                    $.cookie('total1',total1);
+                }
+            },1000);
+        }
+	</script>
+
+
+
+	<div class="pop">
+		<div class="pop-top">
+			<!--<h2>服务使用协议</h2>-->
+			<span class="pop-close">Ｘ</span>
+		</div>
+		<div class="pop-content">
+			<div class="pop-content-left">
+				<img src="" alt="" class="teathumb">
+			</div>
+			<div class="pop-content-right">
+
+				<div class="reg-h5">
+					<div class="w580">
+						<!--<div class="c1-title">-->
+							<!--<img  src="__INDEX__/picture/1.png" />-->
+						<!--</div>-->
+
+						<form action="" method="post">
+
+							<div class="c3">
+								<div class="formbox">
+									<input id="brokerId" name="name" type="text" placeholder="请输入您的真实姓名" class="inp"/>
+									<input id="mobile" name="mobile" type="text" autocomplete="off" class="inp" placeholder="请输入您的手机号" />
+									<input id="password" name="password" type="password" autocomplete="off" class="inp" placeholder="请设置6-20位登录密码" />
+									<!--<div class="item w-95">-->
+									<!--<input id="checkCode" type="text" name="code" autocomplete="off" class="inp" placeholder="请输入图形验证码" />-->
+									<!--<img id="checkCodeImg" class="yzm" src="{:captcha_src()}" onclick="this.src='{:captcha_src()}?'+Math.random();" style="cursor:pointer" />-->
+									<!--</div>-->
+									<div class="item">
+										<input id="authCode" type="number" name="send_code" autocomplete="off" class="inp inp-150" placeholder="请输入短信验证码" />
+										<input type="button" class="btn btn-50" onclick="sendChangeEmail();"  id="btn2" value="获取验证码">
+									</div>
+								</div>
+							</div>
+							<div class="c4">
+								<button id="submit-btn" type="submit" class="btn btn-reset">立即注册</button>
+								<p>
+									<!--<input type="checkbox" class="checkbox" checked />-->
+									<!--阅读并同意-->
+									<!--<a href="https://sybapi.seercf.com/app/html/reg_rule.htm">《用户注册协议》</a>-->
+									<input type="checkbox" class="checkbox"  id="regText" checked="checked" onclick="if(this.checked){Ds('sbm');}else{Dh('sbm');}"/>
+									<label class="c" hidefocus="true" style="font-size: 12.5px;">我已阅读并接受《<a href="javascript:void(0)"  class="click_pop">用户注册协议</a>》</label>
+								</p>
+							</div>
+
+						</form>
+
+					</div>
+					<div class="layer-bg"></div>
+					<div class="dialog-box">
+						<div class="bd">
+							<h3>恭喜你注册成功！</h3>
+							<a href="https://fir.im/syb" class="btn btn-30 icon-android">
+								<i></i><span>安卓用户下载APP</span>
+							</a>
+							<a href="https://sybtg.seercf.com/app/ios.htm" class="btn btn-30 icon-ios">
+								<i></i><span>苹果用户下载APP</span>
+							</a>
+						</div>
+					</div>
+					<div class="dialog-alert">
+						<p id="err-dialog">验证码错误</p>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<script>
+        $(document).ready(function () {
+            $('.pop-close').click(function () {
+                $('.bgPop,.pop').hide();
+            });
+            $('.click_pop').click(function () {
+                $('.bgPop,.pop').show();
+            });
+        })
+
+	</script>
+
+	</body>
+</html>

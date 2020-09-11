@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>管理员列表</title>
+    <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css">
+</head>
+
+<body style="padding:10px 10px;">
+
+<!--刷下页面代码-->
+<a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新">
+    <i style="margin-top: 5px;" class="layui-icon">&#xe669;</i>
+</a>
+<!--刷下页面代码-->
+
+<a href="">首页</a>  >  <a href="">管理员列表</a>
+<hr>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <a class="layui-btn layui-btn-sm layui-btn-danger" href="{:url('leadingin')}" ><i class="layui-icon">&#xe681;</i></a>
+        <a class="layui-btn layui-btn-normal layui-btn-sm " href="{:url('exportexecl')}"><i class="layui-icon">&#xe601;</i></a>
+    </legend>
+    <form class="layui-form layui-form-pane" action="" method="get" >
+        <div class="layui-inline" style="float: left;height: 20px">
+            <label class="layui-form-label">注册时间</label>
+            <div class="layui-input-inline" style="width:330px;">
+                <input type="text" name="time_min" {if condition="$time_min"}value="{$time_min|date='Y/m/d H:i:s',###}"{else/}value="<?php echo date('Y/m/d H:i:s',time())?>"{/if} class="layui-input" id="time_min" style="float: left;width: 150px">
+                <div class="layui-form-mid">-</div>
+
+                <input type="text" name="time_max"  {if condition="$time_max"}value="{$time_max|date='Y/m/d H:i:s',###}"{else/}value="<?php echo date('Y/m/d H:i:s',time())?>"{/if} class="layui-input" id="time_max" style="float: left;width: 150px">
+            </div>
+            <button class="layui-btn">搜索</button>
+        </div>
+    </form>
+    <form class="layui-form layui-form-pane" action="" method="get" >
+        <div class="layui-inline" style="float: right;height: 20px">
+            <label class="layui-form-label">搜索关键词</label>
+            <div class="layui-input-inline">
+                <input type="text" name="search" value="{$keyword}" placeholder="请输入会员账号" class="layui-input">
+            </div>
+
+            <button class="layui-btn">搜索</button>
+        </div>
+    </form>
+</fieldset>
+
+
+
+<form class="layui-form" action="{:url('alldel')}"  onsubmit="javascript:return confirm('您确认要执行批量删除操作吗？');" method="post">
+    <table class="layui-table">
+        <colgroup>
+            <!--<col width="30">-->
+            <!--<col width="100">-->
+            <!--<col width="60">-->
+            <!--<col width="70">-->
+            <!--<col>-->
+            <!--<col>-->
+            <!--<col>-->
+            <!--<col>-->
+            <!--<col>-->
+            <!--<col>-->
+        </colgroup>
+        <thead>
+        <tr>
+            <th style="text-align: center;">
+                <input type="checkbox" name="" lay-skin="primary" lay-filter="quanxuan">
+            </th>
+            <th>ID</th>
+            <th>客户手机号</th>
+            <th>客户姓名</th>
+            <th>注册时间</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="userRes" id="vo"}
+        <tr>
+            <td align="center">
+                <input type="checkbox" name="id[]" value="{$vo.id}" class="qx" lay-skin="primary"  >
+            </td>
+            <td>{$vo.id}</td>
+            <td>{$vo.mobile}</td>
+            <td>{$vo.name}</td>
+            <td>{$vo.time|date="Y/m/d H:i:s",###}</td>
+
+
+            <td>{if condition="$vo.status eq 1"}正常{else /}异常{/if}</td>
+
+            <td>
+                <a href="{:url('edit',array('id'=>$vo['id']))}" class="layui-btn layui-btn-sm">
+                    <i class="layui-icon">&#xe615;</i> 查看
+                </a>
+                <a href="{:url('del',array('id'=>$vo['id']))}" class="layui-btn layui-btn-danger layui-btn-sm del">
+                    <i class="layui-icon">&#xe640;</i>删除
+                </a>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <button type="submit" class="layui-btn layui-btn-danger layui-btn-sm" ><i class="layui-icon">&#xe640;</i>批量删除</button>
+    <a class="layui-btn layui-btn-sm dels" href="{:url('deltableall')}" ><i class="layui-icon">&#xe640;</i>清空数据表</a>
+</form>
+<!--<a class="layui-btn layui-btn-sm" href="{:url('deltableall')}" ><i class="layui-icon">&#xe640;</i>清空数据表</a>-->
+
+
+
+<div style="text-align: right; margin-top: 10px; ">
+    {$userRes->render()}
+</div>
+
+
+<div></div>
+<!--<script src="__ADMIN__/layui/jquery_002.js"></script>-->
+<script src="__ADMIN__/layui/jquery.js"></script>
+<script src="__ADMIN__/layui/layui.js"></script>
+
+<script>
+    layui.use(['element', 'form'], function(){
+        var element = layui.element;
+        var form = layui.form;
+
+        $('.dels').on('click',function () {
+            var url=$(this).attr('href');
+            layer.confirm('确定要执行清空表全部记录吗?请慎重!', {icon: 3, title:'温馨提示'}, function(index){
+                //do something
+                location.href=url;
+                layer.close(index);
+            });
+            return false;
+        })
+    //复选框全选与取消
+    form.on('checkbox(quanxuan)', function(data){
+        alert(666)
+         console.log(data.value); //复选框value值，也可以通过data.elem.value得到
+        if(data.elem.checked){
+            //全选
+            //$('.qx').prop('checked','checked'); //第一种写法
+            $('.qx').prop('checked',true); //第二种写法
+            form.render();
+        }else {
+            //取消全选
+            //$('.qx').removeAttr('checked');  //第一种写法
+            $('.qx').prop('checked',false); //第二种写法
+            form.render();
+        }
+        console.log(data.elem); //得到checkbox原始DOM对象
+        console.log(data.elem.checked); //是否被选中，true或者false
+        console.log(data.value); //复选框value值，也可以通过data.elem.value得到
+        console.log(data.othis); //得到美化后的DOM对象
+    });
+
+    });
+
+</script>
+
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#time_min' //指定元素
+            ,type: 'datetime'
+            ,format: 'yyyy/MM/dd HH:mm:ss' //可任意组合
+        });
+        laydate.render({
+            elem: '#time_max' //指定元素
+            ,type: 'datetime'
+            ,format: 'yyyy/MM/dd HH:mm:ss' //可任意组合
+        });
+    });
+</script>
+
+<!--lay删除提示-->
+<script>
+    layui.use('layer', function(){
+        var layer = layui.layer;
+        $('.del').on('click',function () {
+            var url=$(this).attr('href');
+            layer.confirm('确定要删除该记录吗?', {icon: 3, title:'温馨提示'}, function(index){
+                //do something
+                location.href=url;
+                layer.close(index);
+            });
+            return false;
+        })
+    });
+    $(function(){
+        $(window.parent.document).find('#righttitle').text($('title').text());
+    });
+</script>
+
+
+</body>
+</html>
